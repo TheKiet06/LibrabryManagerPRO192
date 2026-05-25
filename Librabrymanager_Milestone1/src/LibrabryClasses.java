@@ -69,10 +69,10 @@ class Sach {
 
     class Borrow {
 
-    String studentName;
-    String bookName;
-    String borrowDate;
-    String returnDate;
+   private String studentName;
+   private String bookName;
+   private String borrowDate;
+   private String returnDate;
 
     public Borrow(String studentName,
                   String bookName,
@@ -120,6 +120,34 @@ class Sach {
     public String getStudentName() {
         return studentName;
     }
+        public String getBookName() {
+        return bookName;
+    }
+
+    public String getBorrowDate() {
+        return borrowDate;
+    }
+
+    public String getReturnDate() {
+        return returnDate;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
+
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
+    }
+
+    public void setBorrowDate(String borrowDate) {
+        this.borrowDate = borrowDate;
+    }
+
+    public void setReturnDate(String returnDate) {
+        this.returnDate = returnDate;
+    }
+
 }
 class BorrowManager {
 
