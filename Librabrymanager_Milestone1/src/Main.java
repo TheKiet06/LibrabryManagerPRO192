@@ -34,11 +34,12 @@ public class Main {
                                 System.out.println("2. Show all books");
                                 System.out.println("3. Search book by name");
                                 System.out.println("4. Delete book by name");
-                                System.out.println("5. Borrow a book");
-                                System.out.println("6. Return a book");
-                                System.out.println("7. Search borrow info by student");
-                                System.out.println("8. Generate report");
-                                System.out.println("9. Exit");
+                                System.out.println("5. Update book information");
+                                System.out.println("6. Borrow a book");
+                                System.out.println("7. Return a book");
+                                System.out.println("8. Search borrow info by student");
+                                System.out.println("9. Generate report");
+                                System.out.println("10. Exit");
                                 System.out.print("Enter your choice: ");
                                 choice = sc.nextInt();
                                 sc.nextLine();
@@ -88,8 +89,29 @@ public class Main {
                                         if (daXoa) System.out.println("=> Delete Success!");
                                         else System.out.println("=> Can't find to delete!");
                                         break;
+                                        case 5:
+                    if (danhSachSach.isEmpty()) {
+                        System.out.println("=> There are no books to update.");
+                    } else {
+                        System.out.println("Enter the book ID to update: ");
+                        int idTim = sc.nextInt();
+                        sc.nextLine(); 
+                        boolean CheckUpdate = false;
+                         for (Sach x : danhSachSach){
+                        if (x.bookID == idTim){
+                            x.updateBook(sc);
+                            CheckUpdate = true;
+                            break;
+                        }
+                    }
+                         if (!CheckUpdate) {
+                             System.out.println("=> No books with that ID were found: "+ idTim);
+                         }
+                        
+                    }
+                    break;
 
-                                    case 5:
+                                    case 6:
                                         System.out.print("Enter student name: ");
                                         String student = sc.nextLine();
                                         System.out.print("Enter book name: ");
@@ -108,7 +130,7 @@ public class Main {
                                         }
                                         break;
 
-                                    case 6:
+                                    case 7:
                                         System.out.print("Enter book name to return: ");
                                         String returnBookName = sc.nextLine();
                                         System.out.print("Enter return date: ");
@@ -129,24 +151,24 @@ public class Main {
                                         }
                                         break;
 
-                                    case 7:
+                                    case 8:
                                         System.out.print("Enter student name to search: ");
                                         String searchName = sc.nextLine();
                                         manager.searchBorrow(searchName);
                                         break;
 
-                                    case 8:
+                                    case 9:
                                         report.generateBorrowReport(danhSachSach);
                                         break;
 
-                                    case 9:
+                                    case 10:
                                         System.out.println("Exiting...");
                                         break;
 
                                     default:
                                         System.out.println("Invalid choice! Please try again.");
                                 }
-                            } while (choice != 9);
+                            } while (choice != 10);
                         } else {
                             System.out.println("Wrong username or password!");
                         }
