@@ -90,26 +90,26 @@ public class Main {
                                         else System.out.println("=> Can't find to delete!");
                                         break;
                                         case 5:
-                    if (danhSachSach.isEmpty()) {
-                        System.out.println("=> There are no books to update.");
-                    } else {
-                        System.out.println("Enter the book ID to update: ");
-                        int idTim = sc.nextInt();
-                        sc.nextLine(); 
-                        boolean CheckUpdate = false;
-                         for (Sach x : danhSachSach){
-                        if (x.bookID == idTim){
-                            x.updateBook(sc);
-                            CheckUpdate = true;
-                            break;
-                        }
-                    }
-                         if (!CheckUpdate) {
-                             System.out.println("=> No books with that ID were found: "+ idTim);
-                         }
-                        
-                    }
-                    break;
+                                        if (danhSachSach.isEmpty()) {
+                                            System.out.println("=> There are no books to update.");
+                                        } else {
+                                            System.out.println("Enter the book ID to update: ");
+                                            int idTim = sc.nextInt();
+                                            sc.nextLine(); 
+                                            boolean CheckUpdate = false;
+                                             for (Sach x : danhSachSach){
+                                            if (x.bookID == idTim){
+                                                x.updateBook(sc);
+                                                CheckUpdate = true;
+                                                break;
+                                            }
+                                        }
+                                             if (!CheckUpdate) {
+                                                 System.out.println("=> No books with that ID were found: "+ idTim);
+                                             }
+                                            
+                                        }
+                                        break;
 
                                     case 6:
                                         System.out.print("Enter student name: ");
