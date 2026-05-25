@@ -155,11 +155,11 @@ public class Main {
                                         System.out.print("Enter student name to search: ");
                                         String searchName = sc.nextLine();
                                         manager.searchBorrow(searchName);
-                                        manager.viewBorrowHistory(name);
                                         break;
 
                                     case 9:
                                         report.generateBorrowReport(danhSachSach);
+                                         manager.viewBorrowHistory(name);
                                         break;
 
                                     case 10:
