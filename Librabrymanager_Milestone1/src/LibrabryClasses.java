@@ -49,7 +49,33 @@ class Sach {
     public void xuatBook() {
         System.out.println("[ID: " + bookID + " | Ten: " + title + " | Tac gia: " + author + " | The loai: " + category + "]");
     }
+public void updateBook(Scanner sc) {
+        System.out.println("\nWhat do you want to update? 1. Update Title | 2. Update Author | 3. Update Category");
+        System.out.print("Enter your choice (1-3): ");
+        int luaChon = sc.nextInt();
+        sc.nextLine(); 
 
+        switch (luaChon) {
+            case 1:
+                System.out.print("Enter new book title: ");
+                title = sc.nextLine(); 
+                System.out.println("=> Book title updated successfully!");
+                break;
+            case 2:
+                System.out.print("Enter new author name: ");
+                author = sc.nextLine(); 
+                System.out.println("=> Author name updated successfully!");
+                break;
+            case 3:
+                System.out.print("Enter new category: ");
+                category = sc.nextLine();
+                System.out.println("=> Category updated successfully!");
+                break;
+            default:
+                System.out.println("=> Invalid choice! No information was changed.");
+                break;
+        }
+    }
     public String getBookName() {
         return title;
     }
