@@ -51,7 +51,7 @@ class Sach {
     }
 
     public String getBookName() {
-        return title; // dùng title làm tên sách
+        return title;
     }
 
     public boolean isBorrowed() {
