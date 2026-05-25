@@ -190,3 +190,55 @@ public class Main {
         sc.close();
     }
 }
+public class LibraryApp {
+     public static void main(String[] args) {
+        // listMember đóng vai trò là kho lưu trữ thẻ thành viên
+        ArrayList<ClassMember> listMember = new ArrayList<>();
+        Scanner sc = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("\n--- membership card issuance system ---");
+            System.out.println("1. Create a new card ");
+            System.out.println("2. List of issued cards");
+            System.out.println("0. Exit");
+            System.out.print("Manager select command: ");
+            
+            int choice = Integer.parseInt(sc.nextLine()); // Dùng cách này để tránh lỗi trôi lệnh
+
+            if (choice == 1) {
+                // CHỨC NĂNG 1: LẬP THẺ
+                System.out.println("\n[Enter customer informationg]");
+                System.out.print("- FULL NAME: ");
+                String name = sc.nextLine();
+                System.out.print("- SÐT: ");
+                String phone = sc.nextLine();
+                System.out.print("- Email: ");
+                String email = sc.nextLine();
+
+                // Tạo đối tượng thẻ mới và bỏ vào danh sách
+                ClassMember newCard = new ClassMember(name, phone, email);
+                listMember.add(newCard);
+                
+                System.out.println("=> Card has been successfully created for: " + name);
+
+            } else if (choice == 2) {
+                // CHỨC NĂNG 2: XUẤT DANH SÁCH
+                if (listMember.isEmpty()) {
+                    System.out.println("=> No members have been created yet..");
+                } else {
+                    System.out.println("\n========= LIST OF PERMANENT MEMBERSHIP CARDS =========");
+                    for (ClassMember m : listMember) {
+                        System.out.println(m);
+                    }
+                    System.out.println("==================================================");
+                    System.out.println("Total number of cards: " + listMember.size());
+                }
+            } else if (choice == 0) {
+                System.out.println("The system is off...");
+                break;
+            } else {
+                System.out.println("Invalid order!");
+            }
+        }
+    }
+}
