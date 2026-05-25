@@ -1,12 +1,15 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         User user = new User("kiet", "123");
+        
 
         ArrayList<Sach> danhSachSach = new ArrayList<>();
+        List<Member> members = new ArrayList<>();
         BorrowManager manager = new BorrowManager();
         Report report = new Report();
 
@@ -38,8 +41,11 @@ public class Main {
                                 System.out.println("6. Borrow a book");
                                 System.out.println("7. Return a book");
                                 System.out.println("8. Search borrow info by student");
-                                System.out.println("9. Generate report");
-                                System.out.println("10. Exit");
+                                System.out.println("9. History borrow book");
+                                System.out.println("10. Generate report");
+                                System.out.println("11. Top Borrower report");
+                                System.out.println("12. Member Menu");
+                                System.out.println("13. Exit");
                                 System.out.print("Enter your choice: ");
                                 choice = sc.nextInt();
                                 sc.nextLine();
@@ -89,7 +95,7 @@ public class Main {
                                         if (daXoa) System.out.println("=> Delete Success!");
                                         else System.out.println("=> Can't find to delete!");
                                         break;
-                                        case 5:
+                                    case 5:
                                         if (danhSachSach.isEmpty()) {
                                             System.out.println("=> There are no books to update.");
                                         } else {
@@ -119,14 +125,26 @@ public class Main {
                                         System.out.print("Enter borrow date: ");
                                         String borrowDate = sc.nextLine();
 
+                                        boolean borrowSuccess = false;
                                         for (Sach b : danhSachSach) {
                                             if (b.getBookName().equalsIgnoreCase(bookName) && !b.isBorrowed()) {
                                                 b.borrow();
                                                 Borrow borrow = new Borrow(student, bookName, borrowDate);
                                                 borrow.borrowBook();
                                                 manager.addBorrow(borrow);
+                                                
+                                                for (Member m : members) {
+                                                    if (m.getName().equalsIgnoreCase(student)) {
+                                                        m.increaseBorrowCount();
+                                                        break;
+                                                    }
+                                                }
+                                                borrowSuccess = true;
                                                 break;
                                             }
+                                        }
+                                        if (!borrowSuccess) {
+                                            System.out.println("=> Book not found or already borrowed!");
                                         }
                                         break;
 
@@ -154,22 +172,68 @@ public class Main {
                                     case 8:
                                         System.out.print("Enter student name to search: ");
                                         String searchName = sc.nextLine();
-                                        manager.searchBorrow(searchName);
+                                        manager.searchBorrow(searchName);                                        
                                         break;
-
-                                    case 9:
-                                        report.generateBorrowReport(danhSachSach);
+                                    case 9:                                      
                                          manager.viewBorrowHistory(name);
                                         break;
 
                                     case 10:
+                                        report.generateBorrowReport(danhSachSach);
+                                        break;
+                                    case 11:                                    
+                                        report.generateTopBorrowerReport(members);
+                                        break;                                       
+                                    case 12:
+                                        while (true) {
+                                            System.out.println("\n--- MEMBER MENU ---");
+                                            System.out.println("1. Add new member ");
+                                            System.out.println("2. List of member");
+                                            System.out.println("0. Exit");
+                                            System.out.print("Manager select command: ");
+
+                                            int luachon = Integer.parseInt(sc.nextLine());
+
+                                            if (luachon == 1) {
+                                                System.out.println("\n[Enter customer informationg]");
+                                                System.out.print("- MEMBER NAME: ");
+                                                String memberName = sc.nextLine();
+                                                System.out.print("- PHONE NUMBER: ");
+                                                String phone = sc.nextLine();
+                                                System.out.print("- EMAIL: ");
+                                                String email = sc.nextLine();
+
+                                                Member newCard = new Member(memberName, phone, email); 
+                                                members.add(newCard);  
+
+                                                System.out.println("=> Card has been successfully created for: " + memberName);
+
+                                            } else if (luachon == 2) { 
+                                                if (members.isEmpty()) {
+                                                    System.out.println("=> No members have been created yet..");
+                                                } else {
+                                                    System.out.println("\n========= LIST OF PERMANENT MEMBERSHIP CARDS =========");
+                                                    for (Member m : members) {
+                                                        System.out.println(m);
+                                                    }
+                                                    System.out.println("Total number of cards: " + members.size());
+                                                }
+                                            } else if (luachon == 0) {  
+                                                System.out.println("The system is off...");
+                                                break;
+                                            } else {
+                                                System.out.println("Invalid order!");
+                                            }
+                                        }
+                                        break;
+                                    case 13:
                                         System.out.println("Exiting...");
                                         break;
 
                                     default:
                                         System.out.println("Invalid choice! Please try again.");
                                 }
-                            } while (choice != 10);
+                            } while (choice != 13);
                         } else {
                             System.out.println("Wrong username or password!");
                         }
@@ -182,63 +246,11 @@ public class Main {
                         break;
                 }
             } catch (Exception e) {
-                System.out.println("Loi: " + e.getMessage());
+                System.out.println("Error: " + e.getMessage());
             }
 
         } while (chon != 3);
 
         sc.close();
-    }
-}
-public class LibraryApp {
-     public static void main(String[] args) {
-        // listMember đóng vai trò là kho lưu trữ thẻ thành viên
-        ArrayList<ClassMember> listMember = new ArrayList<>();
-        Scanner sc = new Scanner(System.in);
-
-        while (true) {
-            System.out.println("\n--- membership card issuance system ---");
-            System.out.println("1. Create a new card ");
-            System.out.println("2. List of issued cards");
-            System.out.println("0. Exit");
-            System.out.print("Manager select command: ");
-            
-            int choice = Integer.parseInt(sc.nextLine()); // Dùng cách này để tránh lỗi trôi lệnh
-
-            if (choice == 1) {
-                // CHỨC NĂNG 1: LẬP THẺ
-                System.out.println("\n[Enter customer informationg]");
-                System.out.print("- FULL NAME: ");
-                String name = sc.nextLine();
-                System.out.print("- SÐT: ");
-                String phone = sc.nextLine();
-                System.out.print("- Email: ");
-                String email = sc.nextLine();
-
-                // Tạo đối tượng thẻ mới và bỏ vào danh sách
-                ClassMember newCard = new ClassMember(name, phone, email);
-                listMember.add(newCard);
-                
-                System.out.println("=> Card has been successfully created for: " + name);
-
-            } else if (choice == 2) {
-                // CHỨC NĂNG 2: XUẤT DANH SÁCH
-                if (listMember.isEmpty()) {
-                    System.out.println("=> No members have been created yet..");
-                } else {
-                    System.out.println("\n========= LIST OF PERMANENT MEMBERSHIP CARDS =========");
-                    for (ClassMember m : listMember) {
-                        System.out.println(m);
-                    }
-                    System.out.println("==================================================");
-                    System.out.println("Total number of cards: " + listMember.size());
-                }
-            } else if (choice == 0) {
-                System.out.println("The system is off...");
-                break;
-            } else {
-                System.out.println("Invalid order!");
-            }
-        }
     }
 }
