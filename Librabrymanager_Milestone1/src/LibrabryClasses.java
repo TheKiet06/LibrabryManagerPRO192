@@ -95,10 +95,10 @@ public void updateBook(Scanner sc) {
 
     class Borrow {
 
-    String studentName;
-    String bookName;
-    String borrowDate;
-    String returnDate;
+    private String studentName;
+    private String bookName;
+    private String borrowDate;
+    private String returnDate;
 
     public Borrow(String studentName,
                   String bookName,
@@ -146,6 +146,34 @@ public void updateBook(Scanner sc) {
     public String getStudentName() {
         return studentName;
     }
+        public String getBookName() {
+        return bookName;
+    }
+
+    public String getBorrowDate() {
+        return borrowDate;
+    }
+
+    public String getReturnDate() {
+        return returnDate;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
+
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
+    }
+
+    public void setBorrowDate(String borrowDate) {
+        this.borrowDate = borrowDate;
+    }
+
+    public void setReturnDate(String returnDate) {
+        this.returnDate = returnDate;
+    }
+
 }
 class BorrowManager {
 
@@ -153,11 +181,13 @@ class BorrowManager {
     int count = 0;
 
     public void addBorrow(Borrow b) {
-
+    if(count < list.length){
         list[count] = b;
         count++;
+    }else{
+        System.out.println("Borrow list is full");
     }
-
+    }
     public void searchBorrow(String studentName) {
 
         for (int i = 0; i < count; i++) {
@@ -171,6 +201,31 @@ class BorrowManager {
         }
 
         System.out.println("Student not found!");
+    }
+    public void showAllBorrow(){
+    for(int i=0; i<count;i++){
+        list[i].showInfo();
+        System.out.println("---------");
+    }
+}
+
+    public int getCount() {
+        return count;
+    }
+    public void viewBorrowHistory(String studentName){
+        boolean found = false;
+        System.out.println("\n===== Borrow History");
+        for(int i=0; i<count ;i++){
+            if(list[i].getStudentName()
+                    .equalsIgnoreCase(studentName)){
+                list[i].showInfo();
+                System.out.println("---------");
+                found = true;
+            }
+        }
+        if(!found){
+            System.out.println("Not borrowing history found!");
+        }
     }
 }
 class Report {
