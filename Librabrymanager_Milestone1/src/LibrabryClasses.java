@@ -257,7 +257,25 @@ class Report {
         System.out.println("====================================");
     }
 }
+public class ClassMember {
+    private String name;
+    private String phone;
+    private String email;
+    /**
+     * @param args the command line arguments
+     */
+    public ClassMember(String name, String phone, String email) {
+         this.name = name;
+         this.phone = phone;
+         this.email = email;
+    }
 
+    // Định dạng cách in thông tin trên thẻ khi xuất ra màn hình
+    @Override
+    public String toString() {
+        return String.format("| Name: %-15s | SĐT: %-12s | Email: %-20s |", name, phone, email);
+    }
+    }
 
 
 
