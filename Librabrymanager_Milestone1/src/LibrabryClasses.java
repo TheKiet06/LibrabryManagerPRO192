@@ -1,16 +1,6 @@
 
-
-
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
-/**
- *
- * @author NV
- */
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 class Sach {
@@ -96,9 +86,9 @@ public void updateBook(Scanner sc) {
     class Borrow {
 
     private String studentName;
-    private String bookName;
+    String bookName;
     private String borrowDate;
-    private String returnDate;
+    String returnDate;
 
     public Borrow(String studentName,
                   String bookName,
@@ -121,7 +111,7 @@ public void updateBook(Scanner sc) {
 
     public void showInfo() {
 
-        System.out.println("Student: "
+        System.out.println("Member: "
                 + studentName);
 
         System.out.println("Book Name: "
@@ -256,26 +246,59 @@ class Report {
         System.out.println("Available books: " + availableCount);
         System.out.println("====================================");
     }
+    public void generateTopBorrowerReport(List<Member> members) {
+    System.out.println("===== Top Borrower Report =====");
+
+    Member topBorrower = null;
+    int maxBorrowed = 0;
+
+    for (Member m : members) {
+        if (m.getBorrowCount() > maxBorrowed) {
+            maxBorrowed = m.getBorrowCount();
+            topBorrower = m;
+        }
+    }
+
+    if (topBorrower != null && maxBorrowed > 0) {
+        System.out.println("Member with most borrowed books: " + topBorrower.getName());
+        System.out.println("Number of books borrowed: " + maxBorrowed);
+    } else {
+        System.out.println("No books borrowed yet.");
+    }
+
+    System.out.println("================================");
+    }
 }
-public class ClassMember {
+class Member {
     private String name;
     private String phone;
     private String email;
-    /**
-     * @param args the command line arguments
-     */
-    public ClassMember(String name, String phone, String email) {
-         this.name = name;
-         this.phone = phone;
-         this.email = email;
+    private int borrowCount;
+
+    public Member(String name, String phone, String email) {
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.borrowCount = 0;
     }
 
-    // Định dạng cách in thông tin trên thẻ khi xuất ra màn hình
+    public String getName() { return name; }
+    public String getPhone() { return phone; }
+    public String getEmail() { return email; }
+    public int getBorrowCount() { return borrowCount; }
+
+    public void increaseBorrowCount() { borrowCount++; }
+    public void decreaseBorrowCount() {
+        if (borrowCount > 0) borrowCount--;
+    }
+
     @Override
     public String toString() {
-        return String.format("| Name: %-15s | SĐT: %-12s | Email: %-20s |", name, phone, email);
+        return String.format("| NAME: %-15s | PHONE NUMBER: %-12s | EMAIL: %-20s | BORROW: %d quyen |",
+                name, phone, email, borrowCount);
     }
-    }
+}
+
 
 
 
